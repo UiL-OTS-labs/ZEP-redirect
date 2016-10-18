@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+
+# attempts to redirect zep command to the zep version that is required
+# In order of priority:
+# Existence of a file use-zep-x.y(.txt)
+# A line 'requires x.y;' in the zep script being called.
+
+# Exit codes:
+# 0 - all is great
+# 1 - cannot resolve the zep version
+# 2 - resolved zep version does not exist
+
+# 2016-10-18 : Chris van Run (C.P.A.vanrun@uu.nl)
+
+# Attempt to find a 'usage' file in the format use-zep-x.y.txt
+USE=`echo use-zep-[0-9]*`
+if [ "x${ZEPVER}" = "x" -a -e $USE ]; then
+	USE=`basename $USE .txt`
+	ZEPVER=`echo $USE | cut -d- -f3`
+fi
+
+# Attempt to find any 'requires' statements in the file that is called files
+if [ "x${ZEPVER}" = "x" -a -r "${1}" ]; then
+  ZEPVER=`grep -E '^requires [0-9\.]+;$' "${1}" |\
+            cut -d ' ' -f2 |\
+            cut -d ';' -f1 |\
+            sort | tail -1`
+fi
+
+if [ "x${ZEPVER}" != "x" ]; then
+	if command -v zep-"${ZEPVER}" >/dev/null 2>&1; then
+	    zep-$ZEPVER $*
+	    exit 0
+	  else
+	    echo "Cannot find zep version ${ZEPVER}!"
+	    exit 2
+	fi
+fi
+
+echo "Don't know which Zep version to use."
+
+echo "\nInstead of entering \"zep expname\" please enter \"zep-x.y expname\" where"
+echo "x.y is the desired version number. In case your experiment script doesn't "
+echo "tell you which version to use please ask for assistence."
+
+echo "\nAlternatively you could create a file named \"use-zep-x.y\" in the current"
+echo "folder (\"use-zep-x.y.txt\" works too). Entering \"zep expname\" will then"
+echo "execute the Zep version you have specified."
+
+exit 1

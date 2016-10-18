@@ -1,0 +1,8 @@
+Package: zep-redirect
+Version: 1.0-1
+Architecture: all
+Maintainer: C.P.A. van Run <labman.gw@uu.nl>
+Depends: grep, coreutils
+Homepage: https://github.com/UiL-OTS-labs/ZEP-redirect
+Description: Package installs a simple that redirects zep calls based on version numbering.
+  Either via the existence of a use-zep-x.y.txt or a 'requires x.y;' line in the zep script'.
