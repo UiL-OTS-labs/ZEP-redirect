@@ -6,8 +6,8 @@ Assumes that scripts placed in `/usr/local/bin` take priority over those in `/us
 
 # Methodology
 In order of priority the zep-redirect checks the following:
-1. existence of a file _use-zep-x.y.txt_
-1. a line `requires x.y;` in the zep script being called.
+* existence of a file _use-zep-x.y.txt_
+* a line `requires x.y;` in the zep script being called.
 
 # Exit codes:
 * 0 - all is great
