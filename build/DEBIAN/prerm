@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -e
+
+if [ -L /usr/local/bin/zep ]; then
+  rm /usr/local/bin/zep
+fi
+
+exit 0

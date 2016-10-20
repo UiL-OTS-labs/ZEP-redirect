@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+set -e
+
+linkname="/usr/local/bin/zep"
+
+if [ ! -e "${linkname}" -o -L "${linkname}" ]; then
+  ln --symbolic --force \
+    /usr/local/bin/zep-redirect \
+    "${linkname}"
+  else
+  # Have it fail with this command so the installer is informed!
+  echo "It is unwise to remove ${linkname} because it is a not a symbolic link!"
+  exit 1
+fi
+
+exit 0
