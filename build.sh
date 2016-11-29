@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-dpkg-deb --build ./build .
+fakeroot dpkg-deb --build ./build .
